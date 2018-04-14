@@ -1,0 +1,131 @@
+4.18.1
+	add	R5, R0, R0	# i = 0
+	loop:
+		beq	R5, R6, End		# if(i != j)
+		add	R10, R5, R10	# i = i+a
+		lw R11, 0(R10)		# R11 = a[i]
+		lw R10, 4(R10)		# R10 = a[i + 1]
+		sub R12, R11, R10	# R12 = a[i] - a[i + 1]
+		add R11, R5, R2 	# R11 = i + b
+		sw R12, 0(R11)		# b[i] = a[i] = a[i + 1]
+		addi R5, R5, 2		# i = i + 2
+		j loop
+	End:
+4.18.2
+	add	R5, R0, R0
+						beq	R5, R6, End
+	add	R10, R5, R10	lw R11, 0(R10)
+						lw R10, 4(R10)
+	sub R12, R11, R10
+	add R11, R5, R2
+	addi R5, R5, 2 		sw R12, 0(R11)
+						j loop
+
+4.18.3
+	add	R5, R0, R0	# i = 0
+	loop:
+		beq	R5, R6, End		# if(i != j)
+		lw R11, 0(R10)		# R11 = a[i]
+		lw R10, 4(R10)		# R10 = a[i + 1]
+		sub R12, R11, R10	# R12 = a[i] - a[i + 1]
+		add R11, R5, R2 	# R11 = i + b
+		sw R12, 0(R11)		# b[i] = a[i] = a[i + 1]
+		addi R5, R5, 2		# i = i + 2
+		j loop
+	End:
+
+4.18.4
+	add	R5, R0, R0
+						beq	R5, R6, End
+						lw R11, 0(R10)
+						lw R10, 4(R10)
+	sub R12, R11, R10
+	add R11, R5, R2
+	addi R5, R5, 2 		sw R12, 0(R11)
+						j loop
+
+4.18.5
+	You can cut down on a couple instuctions, however, the load words for this loop will be the most 
+	slowdown.
+
+4.18.6
+	If this is true you can run close to a speed up of about 2
+
+5.1.1
+	4
+
+5.1.2
+	I and J
+
+5.1.3
+	A[I][J]
+
+5.1.4
+	8 * 800/4 * 2 - 8 * 8/4 + 8000/4 = 3596
+
+5.1.5
+	I and J
+
+5.1.6
+	A(I,J) and B(I, 0)
+
+5.2.1
+	Addr	BinaryAddr	tag	index	hit/miss
+	3		0011		0	3		M
+	180		1011 0100	11	4		M
+	43		0010 1011	2	11		M
+	2		0000 0010	0	2		M
+	191		1011 1111	11	15		M
+	88		0101 1000	5	8		M
+	190		1011 1110	11	14		M
+	14		0000 1110	0	14		M
+	181		1011 0101	11	5		M
+	44		0010 1100	2	12		M
+	186		1011 1010	11	10		M
+	253		1111 1101	15	13		M
+
+5.2.2
+	Addr	BinaryAddr	tag	index	hit/miss
+	3		0011		0	1		M
+	180		1011 0100	11	2		M
+	43		0010 1011	2	5		M
+	2		0000 0010	0	1		H
+	191		1011 1111	11	7		M
+	88		0101 1000	5	4		M
+	190		1011 1110	11	7		M
+	14		0000 1110	0	7		M
+	181		1011 0101	11	2		H
+	44		0010 1100	2	6		M
+	186		1011 1010	11	5		M
+	253		1111 1101	15	5		M
+
+5.2.3
+	Addr	BinaryAddr	tag	index1	hit/miss1	index2	hit/miss
+	3		0011		0	3		M 			1		M
+	180		1011 0100	22	4		M 			2		M
+	43		0010 1011	5	3		M 			1		M
+	2		0000 0010	0	2		M 			1 		M
+	191		1011 1111	23	7		M 			3		M
+	88		0101 1000	11	0		M 			0 		M
+	190		1011 1110	23	6		M 			3		H
+	14		0000 1110	1	6		M 			3		M
+	181		1011 0101	22	5		M 			2 		H
+	44		0010 1100	5	4		M 			2 		M
+	186		1011 1010	23	2		M 			1 		M
+	253		1111 1101	31	5		M 			2 		M
+
+	cache1 missed all
+	cache1 cycles = 12 *25 + 24 = 324
+	cache2 missied 10/12
+	cache2 cycles = 10*25 + 36 = 286
+
+5.2.4
+	The larger block size will require more hit time and a larger miss penalty.
+	Also, fewer number of larger blocks will caise a higher confilct miss rate.
+
+5.2.5
+	Using associative caches will reduce the rate of conflict misses.a sequence of 0 and 32768 would miss on the access
+	in the other problem. However, if youused the 2way set associate cache you would be able to have many more hits.
+
+5.2.6
+	You can do it, however, you will lose the 5 bits of information. You can use tags to find the address in the cache.
